@@ -1,0 +1,11 @@
+{
+    "paths": {
+        "ARGUMENTS": "/home/hnz/Latin-Science/args/",
+        "DATASETS": "/home/hnz/Latin-Science/datasets/",
+        "DATABASES": "/home/hnz/Latin-Science/databases/",
+        "MODULES": "/home/hnz/Latin-Science/ic_rough_sets/modules/",
+        "EXPERIMENTS": "/home/hnz/Latin-Science/experimentos/",
+        "SOURCE": "/home/hnz/Latin-Science/ic_rough_sets/"
+        
+    }
+}
