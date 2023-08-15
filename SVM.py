@@ -8,6 +8,8 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
 
 # Load PATH variable
 with open("config.json", "r") as file:
@@ -64,4 +66,33 @@ print(accuracy)
 cm = confusion_matrix(y_test, y_pred)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['BND',  'COVID', 'NORMAL'])
 disp.plot()
+plt.show()
+
+# Mapeando labels para números para vizualizações
+label_to_number_mapping = {b'NORMAL': 2, b'BND': 0, b'COVID': 1}
+y_train_numeric = np.array([label_to_number_mapping[label] for label in y_train])
+
+# Projeção 2D PCA
+pca = PCA(n_components=2)  # Projetar nos 2 principais componentes
+x_train_2d = pca.fit_transform(x_train)
+x_test_2d = pca.transform(x_test)
+plt.figure(figsize=(10, 6))
+scatter = plt.scatter(x_train_2d[:, 0], x_train_2d[:, 1], c=y_train_numeric, cmap='viridis', s=50, alpha=0.6, edgecolors='w')
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.title('2D PCA of Data')
+plt.legend(*scatter.legend_elements(), title="Classes")
+plt.grid(True)
+plt.show()
+
+# Projeção 2D TSNE
+tsne = TSNE(n_components=2, random_state=42)
+x_train_2d_tsne = tsne.fit_transform(x_train)
+plt.figure(figsize=(10, 6))
+scatter = plt.scatter(x_train_2d_tsne[:, 0], x_train_2d_tsne[:, 1], c=y_train_numeric, cmap='viridis', s=50, alpha=0.6, edgecolors='w')
+plt.xlabel('t-SNE Component 1')
+plt.ylabel('t-SNE Component 2')
+plt.title('2D t-SNE of Data')
+plt.legend(*scatter.legend_elements(), title="Classes")
+plt.grid(True)
 plt.show()
